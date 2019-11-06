@@ -1,0 +1,85 @@
+{
+Example for UART_I2C_SPI Click
+
+    Date          : okt 2018.
+    Author        : Dusan Poluga
+
+Test configuration CEC :
+    
+    MCU              : CEC1702
+    Dev. Board       : Clicker 2 for CEC1702
+    ARM Compiler ver : v6.0.0.0
+
+---
+
+Description :
+
+The application is composed of three sections :
+
+- System Initialization - Initialize the GPIO and communication structures.
+- Application Initialization - Initialize the communication interface and
+                               configure the click board.  
+- Application Task - Character data is sent trough the UART interface of the
+                    click board. When all of the data has been sent the echo 
+                    example is started.
+}
+program Click_UART_I2C_SPI_CEC;
+
+uses Click_UART_I2C_SPI_types, Click_UART_I2C_SPI_config;
+
+var
+    str0 : array[19] of uint8_t; 
+    str1 : array[22] of uint8_t; 
+    str2 : array[19] of uint8_t; 
+    
+procedure systemInit(); 
+begin
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_INT_PIN, _GPIO_INPUT); 
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_RST_PIN, _GPIO_OUTPUT); 
+    mikrobus_gpioInit(_MIKROBUS1, _MIKROBUS_CS_PIN, _GPIO_OUTPUT); 
+    mikrobus_i2cInit(_MIKROBUS1, @_UARTI2CSPI_I2C_CFG[0]); 
+    Delay_ms(100); 
+end;
+
+procedure applicationInit(); 
+begin
+    uarti2cspi_i2cDriverInit(T_UARTI2CSPI_P(@_MIKROBUS1_GPIO), T_UARTI2CSPI_P(@_MIKROBUS1_I2C), UARTI2CSPI_ADDR); 
+    uarti2cspi_initAdvanced(19200, UARTI2CSPI_UART_8_BIT_DATA, UARTI2CSPI_UART_NOPARITY, UARTI2CSPI_UART_ONE_STOPBIT); 
+    uarti2cspi_interruptEnable(UARTI2CSPI_RXD_INT_EN or UARTI2CSPI_THR_EMPTY_INT_EN); 
+    Delay_ms(100); 
+    uarti2cspi_serialWrite(@str0[0], _LINE_PRINT); 
+    Delay_ms(1000); 
+end;
+
+procedure applicationTask(); 
+var
+    counter_var : uint16_t; 
+    text : array[5] of char; 
+begin
+    for counter_var := 0 to 10 - 1 do 
+    begin
+        WordToStr(counter_var, @text[0]); 
+        Ltrim(@text[0]); 
+        uarti2cspi_serialWrite(@text[0], _LINE_PRINT); 
+    end;
+    uarti2cspi_serialWrite(@str1[0], _LINE_PRINT); 
+    uarti2cspi_serialWrite(@str2[0], _LINE_PRINT); 
+    uarti2cspi_uartWrite(0x00); 
+    while (1) do 
+    begin 
+        uarti2cspi_uartWrite(uarti2cspi_uartRead()); 
+    end;
+end;
+
+begin
+    str0 := 'System initialized';
+    str1 := '+++++++++++++++++++++';
+    str2 := 'Entering echo mode';
+
+    systemInit(); 
+    applicationInit(); 
+    while (1) do 
+    begin 
+        applicationTask(); 
+    end;
+end.
