@@ -1,7 +1,0 @@
-module Click_UART_I2C_SPI_config
-
-include Click_UART_I2C_SPI_types
-const
-    _UARTI2CSPI_I2C_CFG as uint32_t[2] = (_I2CM_SPEED_MODE_STANDARD, _I2CM_SWAP_DISABLE)
-    
-end.

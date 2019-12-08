@@ -1,8 +1,0 @@
-unit Click_UART_I2C_SPI_config;
-
-uses Click_UART_I2C_SPI_types;
-
-const
-    _UARTI2CSPI_I2C_CFG : array[1] of uint32_t = (400000); 
-    
-end.
