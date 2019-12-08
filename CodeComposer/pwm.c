@@ -1,6 +1,6 @@
 #include <msp.h>
 #include "pwm.h"
-
+#include <stdio.h>
 
 /* 28.5 Hz is 0 degree
  * 34 Hz is 45 degree
@@ -100,8 +100,4 @@ void start_pwm(uint8_t duty_cycle, uint8_t pwm){
                }
 
  }
-
-
-
-
 
