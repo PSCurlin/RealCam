@@ -22,11 +22,11 @@ void main(void)
 	WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;		// stop watchdog timer
 
 	config_i2c() //Configures the I2C pins on the MSP
-    config_pwm_timer(); //Configures the PWM for the top servo
-	config_pwm_timer2(); //Configures the PWM for the bottom servo
+    config_pwm_timerA0(); //Configures the PWM for the top servo
+	config_pwm_timerA2(); //Configures the PWM for the bottom servo
 
-	config_pwm_gpio(); //Configures the PWM at pin 2.4
-	config_pwm_gpio2(); //Configures the PWM at pin 5.6
+	config_pwm_gpio2_4(); //Configures the PWM at pin 2.4
+	config_pwm_gpio5_6(); //Configures the PWM at pin 5.6
 
 	config_ICM20948(); //
 	
