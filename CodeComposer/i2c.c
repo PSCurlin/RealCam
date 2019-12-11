@@ -5,16 +5,16 @@
  *      Author: jack
  */
 
-
-#include "msp.h"
-#include <stdint.h>
-#include "i2c.h"
-
-/*
+ /*
  * P1.6 --> SDA
  * P1.7 --> SCL
  * EUSCI_B0
  */
+ 
+#include "msp.h"
+#include <stdint.h>
+#include "i2c.h"
+
 void config_i2c(void) {
     EUSCI_B0->CTLW0 |= EUSCI_B_CTLW0_SWRST;  // UCSWRST = 1
 
