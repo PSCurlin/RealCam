@@ -5,43 +5,28 @@
 
 
 
-/* Configure TIMER_A0 to produce PWM waveform
-
-  * TODO: reset R (timer counter) register
-
-  * - TODO: select SMCLK (3MHz) in the CTL register
-
-  * * - TODO: select reset/set output mode for T0.1 timer using CCTL[1]  */
-
+/* Configure TIMER_A0 */
 void config_pwm_timer(void);
+
+/* Configure TIMER_A2 */
 void config_pwm_timer2(void);
 
-/*  - TODO: Start PWM signal on Pin XX at duty_cycle 100kHz,
 
- * *    Note: the DRV2605L PWM input frequency is XXXX
-
- * *  - TODO: calculate and set the amount of ticks needed in CCR
-
- * *  - TODO: enable/start timer (UP mode)
-
- * *  - TODO: Counting and then reset
-
- * * @param uint8_t duty_cycle: 0-100, percentage of time ON */
-
+ 
+/* Calculates number of ticks required for duty cycle and frequency of Timer_A0*/
 void start_pwm(uint8_t duty_cycle, uint8_t pwm);
 
+/* Calculates number of ticks required for duty cycle and frequency of Timer_A2*/
 void start_pwm2(uint8_t duty_cycle, uint8_t pwm);
 
-/* Stop Mode: clear all Mode Control bits, MC, in TAxCTL register */
-
-void stop_pwm(void);
 
 /* Config P2.4 to output TA0.1 waveform */
-
  void config_pwm_gpio(void);
 
+/* Config P5.6 to output TA2.1 waveform */
  void config_pwm_gpio2(void);
- // for second servo
+ 
+/* Function to delay 4s */
  void delay(void);
 
 #endif
