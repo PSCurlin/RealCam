@@ -17,6 +17,7 @@ double roll(void);
 double pitch(void);
 double yaw(void);
 
+uint8_t pitch_conversion(double input);
 
 uint8_t roll_conversion(double input);
 

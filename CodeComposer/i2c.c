@@ -32,8 +32,9 @@ void config_i2c(void) {
 
     EUSCI_B0->CTLW0 &= ~(EUSCI_B_CTLW0_SWRST);  // clear UCSWRST
 
+//    EUSCI_B0->IE |= (EUSCI_B_IE_TXIE0 | EUSCI_B_IE_RXIE0);
     EUSCI_B0->IFG = 0;
-
+//    NVIC_EnableIRQ(EUSCIB0_IRQn);  // enable interrupts
 }
 
 void write_register(uint8_t address, uint8_t reg, uint8_t value) {
@@ -110,3 +111,7 @@ void set_i2c_address(uint8_t addr) {
 void set_i2c_byte_counter(uint8_t n) {
     EUSCI_B0->TBCNT = n;
 }
+
+//void EUSCIB0_IRQHandler(void) {
+//    if(EUSCI_B0->IFG & )
+//}

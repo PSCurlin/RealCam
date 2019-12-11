@@ -20,6 +20,7 @@ void config_ICM20948(void){
    for(i=0; i<100; i++);
    printf("...\n");
    for(i=0; i<100; i++);
+
    uint8_t whoami = read_register(ICM20948,WHO_AM_I); //Reads WHO_AM_I register
    printf("Who am I? This is device 0x%x.\n",whoami);
 
@@ -28,7 +29,8 @@ void config_ICM20948(void){
    write_register(ICM20948,INT_PIN_CFG,0x02);
    write_register(ICM20948,ACCEL_CONFIG,0x38);
    write_register(ICM20948,GYRO_CONFIG_1,0x38);
-   write_register(ICM20948,0x20,0x00);
+
+   write_register(ICM20948,0x20,0x01);
  }
 
 uint16_t read_acceleration_x(void){
@@ -102,6 +104,5 @@ uint16_t read_gyroscope_z(void){
     //printf("gz = %u\n",gz); //Debugging purposes
     return gz;
 }
-
 
 
