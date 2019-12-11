@@ -14,11 +14,11 @@ void main(void)
 	WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;		// stop watchdog timer
 
 	config_i2c();
-    config_pwm_timer();
-	config_pwm_timer2();
+    	config_pwm_timer(); //configures Timer_A0
+	config_pwm_timer2(); //configures Timer_A2
 
-	config_pwm_gpio2();
-	config_pwm_gpio();
+	config_pwm_gpio2(); //Configures P2.4 using Timer_A2 for top servo
+	config_pwm_gpio(); //Configures P5.6 using Timer_A0 for bottom servo
 
 	//config_AK09916();
 	//read_magnetometer_x();
@@ -30,7 +30,7 @@ void main(void)
 	    roll_to_pwm = roll();
 	 if (roll_to_pwm<=15 || roll_to_pwm>=1){
 	        pwm = roll_conversion(roll_to_pwm);
-	        start_pwm2(7,pwm);
+	        start_pwm2(pwm);
 	 }
 	}
 }
