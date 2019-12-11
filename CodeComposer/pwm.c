@@ -8,7 +8,7 @@
 
 
 /* Configures TimerA0 to SMCLK and divides clock down to increase number of ticks*/
-void config_pwm_timer2(void){
+void config_pwm_timer_a0(void){
     TA0CTL &= ~0x0030; //Sets the timer to stop mode (halts timer)
     TA0CTL |= 0b100; // CLR
     TA0CTL |= 0b1000000000; // SMCLK set 1 in bit 9
@@ -18,7 +18,7 @@ void config_pwm_timer2(void){
 }
 
 /* Configures TimerA2 to SMCLK and divides clock down to increase number of ticks*/
-void config_pwm_timer(void){
+void config_pwm_timer_a2(void){
     TA2CTL &= ~0x0030; //Sets the timer to stop mode (halts timer)
     TA2CTL |= 0b100; // CLR
     TA2CTL |= 0b1000000000; // SMCLK set 1 in bit 9
@@ -29,26 +29,26 @@ void config_pwm_timer(void){
 
 /* Starts timerA0 and calculates amount of ticks required for 
 counter to count up to for each duty cycle and frequency*/
-void start_pwm2(uint8_t duty_cycle, uint8_t pwm){
+void start_pwm_p2_4(uint8_t pwm){
     TA0CTL |= 0b010000; //Sets the timer to up mode (starts timer)
     TA0CTL &= ~0b100000;
     TA0CCR0 = CALC_PERIOD(pwm);
-    TA0CCR1 =  TA0CCR0 * duty_cycle / 100;
+    TA0CCR1 =  TA0CCR0 * 7 / 100;
 }
 
 /* Starts timerA2 and calculates amount of ticks required for 
 counter to count up to for each duty cycle and frequency*/
-void start_pwm(uint8_t duty_cycle, uint8_t pwm){
+void start_pwm_p5_6(uint8_t pwm){
     TA2CTL |= 0b010000; //Sets the timer to up mode (starts timer)
     TA2CTL &= ~0b100000;
     TA2CCR0 = CALC_PERIOD(pwm);
-    TA2CCR1 =  TA2CCR0 * duty_cycle / 100;
+    TA2CCR1 =  TA2CCR0 * 7 / 100;
 }
 
 
 
 /* Configures P2.4 to output TA0.1 waveform (pwm for top motor) */
- void config_pwm_gpio2(void){
+ void config_pwm_gpio_p2_4(void){
      P2OUT &= ~0b10000; // clear pin 4 (not sure if this is necessary)
      //we want bit #5 to be 0, 1 in SEL1 and SEL0 respectively for primary module function
      P2SEL1 &= ~0b10000;
@@ -57,21 +57,11 @@ void start_pwm(uint8_t duty_cycle, uint8_t pwm){
  }
 
  /* Config P5.6 to output TA2.1 waveform (pwm for bottom motor) */
- void config_pwm_gpio(void){
+ void config_pwm_gpio_p5_6(void){
      P5OUT &= ~0b1000000; // clear pin 6
      //we want bit #7 to be 0, 1 in SEL1 and SEL0 respectively for primary module function
      P5SEL1 &= ~0b1000000;
      P5SEL0 |= 0b1000000;
      P5DIR |= 0b1000000; //set pin 6 direction as output
- }
-
- //Delay of 4s
- void delay(void){
-     int i=0;
-               while(i<400000)
-               {
-                  i++;
-               }
-
  }
 
