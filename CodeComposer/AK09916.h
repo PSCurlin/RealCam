@@ -1,6 +1,6 @@
 /*
  * AK09916.h
- *
+ * Magnetometer
  *  Created on: Dec 6, 2019
  *      Author: phaed
  */
